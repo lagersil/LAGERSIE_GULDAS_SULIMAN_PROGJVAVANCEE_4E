@@ -7,7 +7,7 @@ public class Ball: MonoBehaviour
     // Start is called before the first frame update
     private Rigidbody rb; 
     private string player; 
-    float[] PlayerSide = { 180f,-180f,135f};
+    float[] PlayerSide = { 45f,-45f,0f,180f,-180f,135f};
     private Vector3 lastVelocity;
     private int PointsJoueur = 0;
     private int PointsIa = 0;
@@ -57,8 +57,5 @@ public class Ball: MonoBehaviour
         }
         }
     
-    void Update()
-    {
-        
-    }
+ 
 }
