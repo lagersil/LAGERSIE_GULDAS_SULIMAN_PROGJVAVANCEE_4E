@@ -13,7 +13,7 @@ public class Ball: MonoBehaviour
     private int PointsIa = 0;
     void Start()
     {
-        player = PlayerPrefs.GetString("Joueur");
+        player = PlayerPrefs.GetString("players");
         Debug.Log(player);
         rb = GetComponent<Rigidbody>();
         float rnd = PlayerSide[Random.Range(0, PlayerSide.Length)];

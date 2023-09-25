@@ -4,37 +4,59 @@ using UnityEngine;
 
 public class ArrowController : MonoBehaviour
 {
-    private float[] rotationPositions = { -45.0f, 0.0f, 45.0f }; // Positions de rotation possibles
-    private int currentPositionIndex = 1; // Index de la position actuelle
-    public float currentAngle; // Ajoutez cette variable publique
+    private float[] rotationPositions = { -45.0f, 0.0f, 45.0f };
+    private float[] rotationPositionsIa = { -180f, 135f, 180f };
+    private int currentPositionIndex = 1; 
+    public float currentAngle;
+    private string Player;
 
+
+    
     void Update()
     {
-        if (Input.GetKeyDown("q"))
+
+        Player = PlayerPrefs.GetString("players");
+        Debug.Log(Player + "eeeee");
+        if (Player == "Joueur")
         {
-            // Décrémenter l'index pour aller à la position précédente
-            currentPositionIndex--;
-            if (currentPositionIndex < 0)
+            if (Input.GetKeyDown("q"))
             {
-                currentPositionIndex = rotationPositions.Length - 1; // Revenir à la dernière position
+
+                currentPositionIndex--;
+                if (currentPositionIndex < 0)
+                {
+                    currentPositionIndex = rotationPositions.Length - 1;
+                }
             }
+
+            if (Input.GetKeyDown("e"))
+            {
+                currentPositionIndex++;
+                if (currentPositionIndex >= rotationPositions.Length)
+                {
+                    currentPositionIndex = 0;
+                }
+            }
+
+
+            float targetRotation = rotationPositions[currentPositionIndex];
+            transform.localRotation = Quaternion.Euler(90, 90, targetRotation);
+
+
+            currentAngle = targetRotation;
+
         }
 
-        if (Input.GetKeyDown("e"))
+        if (Player == "IA")
         {
-            // Incrémenter l'index pour aller à la position suivante
-            currentPositionIndex++;
-            if (currentPositionIndex >= rotationPositions.Length)
-            {
-                currentPositionIndex = 0; // Revenir à la première position
-            }
+           
+            int rnd = Random.Range(0, rotationPositionsIa.Length);
+            
+            float targetRotationIa = rotationPositionsIa[rnd];
+            
+            transform.localRotation = Quaternion.Euler(90, 90, targetRotationIa);
+            
+            currentAngle = targetRotationIa;
         }
-
-        // Appliquer la rotation en fonction de la position actuelle
-        float targetRotation = rotationPositions[currentPositionIndex];
-        transform.localRotation = Quaternion.Euler(90, 90, targetRotation);
-        
-        // Mettez à jour la variable currentAngle
-        currentAngle = targetRotation;
     }
 }

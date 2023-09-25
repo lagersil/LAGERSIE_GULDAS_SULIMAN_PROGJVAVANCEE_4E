@@ -11,49 +11,59 @@ public class BallAttachment : MonoBehaviour
     
     public float launchAngle = 45.0f;
     private ArrowController arrowController; // Variable pour stocker la référence à ArrowController
+    private string players; 
 
     // Start is called before the first frame update
+    void Awake()
+    {
+        arrowController = FindObjectOfType<ArrowController>();
+        
+    }
     void Start()
     {
-        // Obtenez la référence au script ArrowController attaché à un objet dans la scène
-        arrowController = FindObjectOfType<ArrowController>();
+      
+        arrowObject.SetActive(false);
+       
     }
 
-    // Update is called once per frame
+  
     void Update()
     {
-        if (isAttached && Input.GetKeyDown(KeyCode.Space))
-        {
+        if (isAttached && Input.GetKeyDown(KeyCode.Space)){
             DetachBall();
         }
+        if (isAttached && players=="IA")
+        {  
+            Invoke("DetachBall", 3.0f);
+            //DetachBall();
+        }
     }
-    
+
     void DetachBall()
     {
         FixedJoint fixedJoint = GetComponent<FixedJoint>();
         if (fixedJoint != null)
         {
-            // Récupérez le Rigidbody de la balle
+         
             Rigidbody ballRigidbody = fixedJoint.connectedBody;
 
-            // Supprimez le composant FixedJoint
             Destroy(fixedJoint);
 
             isAttached = false;
             
-            // Désactivez la flèche lorsque la balle est attachée
+          
             arrowObject.SetActive(false);
             
             float angleChoisi = arrowController.currentAngle;
 
-            // Convertissez l'angle choisi en une direction dans l'espace
+          
             float launchAngleRad = angleChoisi * Mathf.Deg2Rad;
             Vector3 launchDirection = new Vector3(Mathf.Cos(launchAngleRad), 0.0f, Mathf.Sin(launchAngleRad));
 
-            // Choisissez la force qui convient à votre besoin
-            float launchForce = 10.0f;
+          
+            float launchForce = 5.0f;
 
-            // Appliquez une force au Rigidbody de la balle pour la lancer
+         
             ballRigidbody.AddForce(launchDirection * launchForce, ForceMode.Impulse);
             
         }
@@ -69,10 +79,22 @@ public class BallAttachment : MonoBehaviour
                 fixedJoint.connectedBody = collision.rigidbody;
                 isAttached = true;
 
-                // Activez la flèche lorsque la balle est attachée
-                arrowObject.SetActive(true);
-
+                if (gameObject.name == "Joueur")
+                {
+                    players = "Joueur";
+                    Debug.Log(players);
+                    arrowObject.SetActive(true);
+                    PlayerPrefs.SetString("players", "Joueur");
+                }
+                if (gameObject.name == "IA")
+                {
+                    players = "IA";
+                    arrowObject.SetActive(true);
+                    PlayerPrefs.SetString("players","IA");
+                    Debug.Log("omg");
+                }
                 Debug.Log("Collision");
+              
             }
         }
 
