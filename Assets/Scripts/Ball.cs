@@ -9,7 +9,8 @@ public class Ball: MonoBehaviour
     private string player; 
     float[] PlayerSide = { 180f,-180f,135f};
     private Vector3 lastVelocity;
-  
+    private int PointsJoueur = 0;
+    private int PointsIa = 0;
     void Start()
     {
         player = PlayerPrefs.GetString("Joueur");
@@ -26,7 +27,17 @@ public class Ball: MonoBehaviour
     {
         if (other.CompareTag("But")) // Vérifie si la collision concerne le but.
         {
-            Debug.Log("La balle a atteint le but !");
+            if (player == "Joueur")
+            {
+                Debug.Log("Points pour joueur");
+                PointsJoueur += 1;
+            }
+            else
+            {
+                Debug.Log("Points pour Ia");
+                PointsIa += 1;
+            }
+         
             // Vous pouvez ajouter ici le code pour gérer le succès ou tout autre comportement souhaité.
         }
        
@@ -48,6 +59,6 @@ public class Ball: MonoBehaviour
     
     void Update()
     {
-        Debug.Log(transform.position.z);
+        
     }
 }

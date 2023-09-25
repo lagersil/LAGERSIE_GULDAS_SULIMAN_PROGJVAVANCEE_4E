@@ -8,8 +8,7 @@ public class BallAttachment : MonoBehaviour
     private bool isAttached = false;
 
     private string haveBall = null;
-    private int PointsJoueur = 0;
-    private int PointsIa = 0;
+    
     private string joueur = null; 
     // Start is called before the first frame update
     void Start()
