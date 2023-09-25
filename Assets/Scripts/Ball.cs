@@ -11,6 +11,7 @@ public class Ball: MonoBehaviour
     private Vector3 lastVelocity;
     private int PointsJoueur = 0;
     private int PointsIa = 0;
+    private string finDePartie = "false"; 
     void Start()
     {
         player = PlayerPrefs.GetString("Joueur");
@@ -30,12 +31,16 @@ public class Ball: MonoBehaviour
             if (player == "Joueur")
             {
                 Debug.Log("Points pour joueur");
+                finDePartie = true; 
                 PointsJoueur += 1;
+                player = PlayerPrefs.SetString("true",finDePartie);
             }
             else
             {
                 Debug.Log("Points pour Ia");
                 PointsIa += 1;
+                player = PlayerPrefs.SetString("true",finDePartie);
+                finDePartie = true; 
             }
          
             // Vous pouvez ajouter ici le code pour gérer le succès ou tout autre comportement souhaité.
