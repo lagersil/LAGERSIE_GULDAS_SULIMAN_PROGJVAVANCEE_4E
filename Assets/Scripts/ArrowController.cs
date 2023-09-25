@@ -4,33 +4,55 @@ using UnityEngine;
 
 public class ArrowController : MonoBehaviour
 {
+    // Référence à l'objet balle
+    public GameObject ball;
+
     private float[] rotationPositions = { -45.0f, 0.0f, 45.0f }; // Positions de rotation possibles
     private int currentPositionIndex = 1; // Index de la position actuelle
+    
+    private float currentArrowRotationZ = 0.0f;
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown("q"))
+
+        // Vérifie si la balle est attachée au joueur
+        bool ballAttached = ball.activeSelf;
+
+        // Active ou désactive l'objet flèche en fonction de l'état de la balle
+        gameObject.SetActive(ballAttached);
+
+        if (ballAttached)
         {
-            // Décrémenter l'index pour aller à la position précédente
-            currentPositionIndex--;
-            if (currentPositionIndex < 0)
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                currentPositionIndex = rotationPositions.Length - 1; // Revenir à la dernière position
+                // Tourner la flèche à gauche (vers -45 degrés)
+                currentPositionIndex = (currentPositionIndex - 1 + rotationPositions.Length) % rotationPositions.Length;
+                RotateArrow(rotationPositions[currentPositionIndex]);
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                // Tourner la flèche à droite (vers 45 degrés)
+                currentPositionIndex = (currentPositionIndex + 1) % rotationPositions.Length;
+                RotateArrow(rotationPositions[currentPositionIndex]);
             }
         }
+    }
 
-        if (Input.GetKeyDown("e"))
-        {
-            // Incrémenter l'index pour aller à la position suivante
-            currentPositionIndex++;
-            if (currentPositionIndex >= rotationPositions.Length)
-            {
-                currentPositionIndex = 0; // Revenir à la première position
-            }
-        }
-
-        // Appliquer la rotation en fonction de la position actuelle
-        float targetRotation = rotationPositions[currentPositionIndex];
-        transform.localRotation = Quaternion.Euler(0, targetRotation, 0);
+    private void RotateArrow(float targetRotation)
+    {
+        Vector3 currentRotation = transform.rotation.eulerAngles;
+        currentRotation.z = targetRotation; // Modifiez la rotation autour de l'axe Z
+        currentRotation.x = 90.0f; // Fixez la rotation autour de l'axe X à 90 degrés
+        currentRotation.y = 90.0f; // Fixez la rotation autour de l'axe Y à 90 degrés
+        transform.rotation = Quaternion.Euler(currentRotation);
+        
+        // Mettez à jour la variable de rotation actuelle de l'axe Z
+        currentArrowRotationZ = -targetRotation;
+        
+    }
+    
+    public float GetCurrentArrowRotationZ()
+    {
+        return currentArrowRotationZ;
     }
 }
