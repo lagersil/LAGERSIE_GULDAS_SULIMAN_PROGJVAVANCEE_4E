@@ -37,10 +37,10 @@ public class IA : MonoBehaviour
     private void Start()
     {
         rbIA = GetComponent<Rigidbody>();
-        InvokeRepeating("MonteCarlo", delay, delay);
+        //InvokeRepeating("MonteCarlo", delay, delay);
         finDePartie = PlayerPrefs.GetString("finDePartie");
-        player= PlayerPrefs.GetString("Joueur")
-        MonteCarlo();
+        player = PlayerPrefs.GetString("Joueur");
+       // MonteCarlo();
     }
 
    

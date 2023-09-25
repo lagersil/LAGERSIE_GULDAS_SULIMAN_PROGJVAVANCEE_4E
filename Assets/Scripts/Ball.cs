@@ -31,19 +31,20 @@ public class Ball: MonoBehaviour
             if (player == "Joueur")
             {
                 Debug.Log("Points pour joueur");
-                finDePartie = true; 
+                finDePartie = "true"; 
                 PointsJoueur += 1;
-                player = PlayerPrefs.SetString("true",finDePartie);
+                PlayerPrefs.SetString("true",finDePartie);
             }
             else
             {
                 Debug.Log("Points pour Ia");
                 PointsIa += 1;
-                player = PlayerPrefs.SetString("true",finDePartie);
-                finDePartie = true; 
+                finDePartie = "true"; 
+                PlayerPrefs.SetString("true",finDePartie);
+            
             }
          
-            // Vous pouvez ajouter ici le code pour gérer le succès ou tout autre comportement souhaité.
+           
         }
        
     }
