@@ -11,6 +11,7 @@ public class Ball: MonoBehaviour
     private Vector3 lastVelocity;
     private int PointsJoueur = 0;
     private int PointsIa = 0;
+    private string winner = null; 
     private string finDePartie = "false"; 
     void Start()
     {
@@ -22,6 +23,7 @@ public class Ball: MonoBehaviour
         rb.AddForce(direction * 5f, ForceMode.Impulse);
         Debug.Log("Le nombre aléatoire est : " + rnd);
         lastVelocity = rb.velocity;
+       
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,15 +35,18 @@ public class Ball: MonoBehaviour
                 Debug.Log("Points pour joueur");
                 finDePartie = "true"; 
                 PointsJoueur += 1;
+                PlayerPrefs.SetString("Joueur", winner);
                 PlayerPrefs.SetString("true",finDePartie);
+            
             }
             else
             {
                 Debug.Log("Points pour Ia");
                 PointsIa += 1;
                 finDePartie = "true"; 
+                PlayerPrefs.SetString("Ia", winner);
                 PlayerPrefs.SetString("true",finDePartie);
-            
+              
             }
          
            
