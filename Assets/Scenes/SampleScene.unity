@@ -338,6 +338,10 @@ PrefabInstance:
       propertyPath: arrowObject
       value: 
       objectReference: {fileID: 2687924534152659134, guid: ba46f4eb991d1784d9ae662674f31fcb, type: 3}
+    - target: {fileID: 4901955681279035978, guid: 4d9fc5b9f70677241911c5cc35c991ed, type: 3}
+      propertyPath: arrowController
+      value: 
+      objectReference: {fileID: 170821400910470093, guid: ba46f4eb991d1784d9ae662674f31fcb, type: 3}
     - target: {fileID: 5476019994738504350, guid: 4d9fc5b9f70677241911c5cc35c991ed, type: 3}
       propertyPath: m_Name
       value: Joueur
