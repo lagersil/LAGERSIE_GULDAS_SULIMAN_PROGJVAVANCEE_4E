@@ -6,7 +6,7 @@ public class BallAttachment : MonoBehaviour
 {
     
     private bool isAttached = false;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +26,8 @@ public class BallAttachment : MonoBehaviour
             FixedJoint fixedJoint = gameObject.AddComponent<FixedJoint>();
             fixedJoint.connectedBody = collision.rigidbody;
             isAttached = true;
+            
+            Debug.Log("Collision");
         }
     }
 }
