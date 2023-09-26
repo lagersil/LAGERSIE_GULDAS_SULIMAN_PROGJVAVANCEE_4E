@@ -7,6 +7,7 @@ TagManager:
   - Balle
   - But
   - Mur
+  - ButIA
   layers:
   - Default
   - TransparentFX
