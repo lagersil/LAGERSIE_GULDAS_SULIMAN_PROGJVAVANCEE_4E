@@ -640,6 +640,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Joueur
       objectReference: {fileID: 0}
+    - target: {fileID: 5857342754299304058, guid: 4d9fc5b9f70677241911c5cc35c991ed, type: 3}
+      propertyPath: canMove
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857342754299304058, guid: 4d9fc5b9f70677241911c5cc35c991ed, type: 3}
+      propertyPath: LimitMaxX
+      value: 0.9060148
+      objectReference: {fileID: 0}
     - target: {fileID: 6161997320004914667, guid: 4d9fc5b9f70677241911c5cc35c991ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.62

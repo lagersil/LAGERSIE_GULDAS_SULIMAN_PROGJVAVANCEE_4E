@@ -7,7 +7,7 @@ public class CharacterControll : MonoBehaviour
     public GameObject Player;
     public bool canMove = true;
     private Rigidbody rbJoueur;
-    private float moveSpeed = 5.0f;
+    private float moveSpeed = 2.0f;
     public float LimitMaxX = 0.9060148f;
 
   
@@ -32,23 +32,6 @@ public class CharacterControll : MonoBehaviour
 
             // Appliquer la nouvelle position au Rigidbody
             rbJoueur.MovePosition(nouvellePosition);
-        }
-    }
-    
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Barriere"))
-        {
-            canMove = false;
-        }
-    }
-    
-    // Cette fonction est appelée lorsque l'objet cesse de colliser avec un autre objet.
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            canMove = true;
         }
     }
 
