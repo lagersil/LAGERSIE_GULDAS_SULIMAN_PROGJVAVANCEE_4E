@@ -10,7 +10,6 @@ public class BallAttachment : MonoBehaviour
     public GameObject arrowObject;
     public GameObject IA;
     public GameObject Player1;
-    public GameObject Player2;
     
     public float launchAngle = 45.0f;
     private ArrowController arrowController; // Variable pour stocker la référence à ArrowController
@@ -37,14 +36,6 @@ public class BallAttachment : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Space)){
                 DetachBall();
                 Player1.GetComponent<CharacterControll>().canMove = true;
-            }
-        }
-        
-        if (isAttached && players=="Joueur2"){
-            Player2.GetComponent<CharacterControll>().canMove = false;
-            if(Input.GetKeyDown(KeyCode.P)){
-                DetachBall();
-                Player2.GetComponent<CharacterControll>().canMove = true;
             }
         }
         
