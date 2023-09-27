@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class IA : MonoBehaviour
 {
+    public bool canMove = true;
     public GameObject IAPlayer;
     private string player; 
     public GameObject balle;
@@ -74,7 +75,9 @@ public class IA : MonoBehaviour
 
     private void Update()
     {
-        
-        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothTime * Time.deltaTime);
+        if (canMove)
+        {
+            transform.position = Vector3.Lerp(transform.position, targetPosition, smoothTime * Time.deltaTime);
+        }
     }
 }

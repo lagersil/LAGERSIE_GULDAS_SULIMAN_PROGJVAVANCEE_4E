@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56820a72bbf862547a4a092d95738ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 1
   IAPlayer: {fileID: 449253585}
   balle: {fileID: 383830094}
 --- !u!114 &449253591
@@ -177,6 +178,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowObject: {fileID: 541473560}
+  IA: {fileID: 449253585}
+  Player: {fileID: 1030518556}
   launchAngle: 45
 --- !u!54 &449253592
 Rigidbody:
@@ -573,6 +576,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffbaeb1d5defbc841bbbabe7bd17a211, type: 3}
+--- !u!1 &1030518556 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5476019994738504350, guid: 4d9fc5b9f70677241911c5cc35c991ed, type: 3}
+  m_PrefabInstance: {fileID: 1155596265029504647}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1173195225
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +620,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4901955681279035978, guid: 4d9fc5b9f70677241911c5cc35c991ed, type: 3}
+      propertyPath: IA
+      value: 
+      objectReference: {fileID: 449253585}
+    - target: {fileID: 4901955681279035978, guid: 4d9fc5b9f70677241911c5cc35c991ed, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1030518556}
     - target: {fileID: 4901955681279035978, guid: 4d9fc5b9f70677241911c5cc35c991ed, type: 3}
       propertyPath: arrowObject
       value: 
