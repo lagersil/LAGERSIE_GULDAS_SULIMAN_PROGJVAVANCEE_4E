@@ -9,8 +9,6 @@ public class MCTS : MonoBehaviour
     
     public GameObject IAPlayer;
     private string player; 
-    public GameObject balle;
-    private Rigidbody rbIA;
     private float moveSpeed = 5.0f;
     private float smoothTime = 0.5f;
     private float delay = 1.0f; 
@@ -142,34 +140,8 @@ public class MCTS : MonoBehaviour
     }*/
 
 
-    return coupsPossible;
+    	return coupsPossible;
+	}
+    
 }
-    private State GenerateStateAfterMovement(State st, Movement mouv)
-    {
-        
-        switch (mouv)
-        {
-            case mouv.Up:
-                targetPosition = transform.position + Vector3.forward * moveSpeed;
-                break;
-            case mouv.Down:
-                targetPosition = transform.position - Vector3.forward * moveSpeed;
-                break;
-            case mouv.Left:
-                targetPosition = transform.position - Vector3.right * moveSpeed;
-                break;
-            case mouv.Right:
-                targetPosition = transform.position + Vector3.right * moveSpeed;
-                break;
-        }
- 
-       
-        targetPosition.z = Mathf.Clamp(targetPosition.z, minZ, maxZ);
-        targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, 0.99f, 0.99f);
-        
-        State newState = new State(st.player, st.iA, st.ball, st.playerScore, st.iAScore, st.finDePartie, st.winner,st.hasball);
-        return newState;
-    }
-    }
 
