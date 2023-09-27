@@ -9,9 +9,19 @@ public class MenuController : MonoBehaviour
     public GameObject settingsWindow;
     public GameObject choix;
 
-    public void StartGame()
+    public void StartGame_IA()
     {
-        SceneManager.LoadScene(levelToLoad);
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void StartGame_MCTS()
+    {
+        SceneManager.LoadScene("");
+    }
+
+    public void StartGame_VS()
+    {
+        SceneManager.LoadScene("");
     }
 
     public void choixGame()
