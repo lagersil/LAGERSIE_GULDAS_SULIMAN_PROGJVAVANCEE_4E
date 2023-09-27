@@ -9,7 +9,7 @@ public class BallAttachment : MonoBehaviour
 
     public GameObject arrowObject;
     public GameObject IA;
-    public GameObject Player;
+    public GameObject Player1;
     
     public float launchAngle = 45.0f;
     private ArrowController arrowController; // Variable pour stocker la référence à ArrowController
@@ -32,12 +32,13 @@ public class BallAttachment : MonoBehaviour
     void Update()
     {
         if (isAttached && players=="Joueur"){
-            Player.GetComponent<CharacterControll>().canMove = false;
+            Player1.GetComponent<CharacterControll>().canMove = false;
             if(Input.GetKeyDown(KeyCode.Space)){
                 DetachBall();
-                Player.GetComponent<CharacterControll>().canMove = true;
+                Player1.GetComponent<CharacterControll>().canMove = true;
             }
         }
+        
         if (isAttached && players=="IA")
         {  
             IA.GetComponent<IA>().canMove = false;
@@ -81,31 +82,37 @@ public class BallAttachment : MonoBehaviour
     {
         if (!isAttached && collision.gameObject.CompareTag("Balle"))
         {
-            if (!isAttached && collision.gameObject.CompareTag("Balle"))
-            {
-                FixedJoint fixedJoint = gameObject.AddComponent<FixedJoint>();
-                fixedJoint.connectedBody = collision.rigidbody;
-                isAttached = true;
+            FixedJoint fixedJoint = gameObject.AddComponent<FixedJoint>();
+            fixedJoint.connectedBody = collision.rigidbody;
+            isAttached = true;
 
-                if (gameObject.name == "Joueur")
-                {
-                    players = "Joueur";
-                    Debug.Log(players);
-                    arrowObject.SetActive(true);
-                    PlayerPrefs.SetString("players", "Joueur");
-                }
-                if (gameObject.name == "IA")
-                {
-                    players = "IA";
-                    arrowObject.SetActive(true);
-                    PlayerPrefs.SetString("players","IA");
-                }
-                Debug.Log("Collision");
-              
+            if (gameObject.name == "Joueur")
+            {
+                players = "Joueur";
+                Debug.Log(players);
+                arrowObject.SetActive(true);
+                PlayerPrefs.SetString("players", "Joueur");
             }
+
+            if (gameObject.name == "Joueur2")
+            {
+                players = "Joueur2";
+                Debug.Log(players);
+                arrowObject.SetActive(true);
+                PlayerPrefs.SetString("players", "Joueur2");
+            }
+
+            if (gameObject.name == "IA")
+            {
+                players = "IA";
+                arrowObject.SetActive(false);
+                PlayerPrefs.SetString("players", "IA");
+            }
+
+            Debug.Log("Collision");
+
         }
 
-       
     }
     
     public bool IsAttached()

@@ -16,7 +16,7 @@ public class ArrowController : MonoBehaviour
     {
 
         Player = PlayerPrefs.GetString("players");
-        Debug.Log(Player + "eeeee");
+        Debug.Log(Player);
         if (Player == "Joueur")
         {
             if (Input.GetKeyDown("q"))
@@ -39,6 +39,35 @@ public class ArrowController : MonoBehaviour
             }
 
 
+            float targetRotation = rotationPositions[currentPositionIndex];
+            transform.localRotation = Quaternion.Euler(90, 90, targetRotation);
+
+
+            currentAngle = targetRotation;
+
+        }
+        
+        if (Player == "Joueur2")
+        {
+            if (Input.GetKeyDown("u"))
+            {
+
+                currentPositionIndex--;
+                if (currentPositionIndex < 0)
+                {
+                    currentPositionIndex = rotationPositions.Length - 1;
+                }
+            }
+
+            if (Input.GetKeyDown("o"))
+            {
+                currentPositionIndex++;
+                if (currentPositionIndex >= rotationPositions.Length)
+                {
+                    currentPositionIndex = 0;
+                }
+            }
+            
             float targetRotation = rotationPositions[currentPositionIndex];
             transform.localRotation = Quaternion.Euler(90, 90, targetRotation);
 
