@@ -94,14 +94,6 @@ public class BallAttachment : MonoBehaviour
                 PlayerPrefs.SetString("players", "Joueur");
             }
 
-            if (gameObject.name == "Joueur2")
-            {
-                players = "Joueur2";
-                Debug.Log(players);
-                arrowObject.SetActive(true);
-                PlayerPrefs.SetString("players", "Joueur2");
-            }
-
             if (gameObject.name == "IA")
             {
                 players = "IA";
