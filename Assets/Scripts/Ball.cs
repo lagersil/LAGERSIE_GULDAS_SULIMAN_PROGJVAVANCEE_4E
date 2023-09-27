@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Ball: MonoBehaviour
 {
@@ -30,12 +31,14 @@ public class Ball: MonoBehaviour
 
             Debug.Log("Points pour joueur");
             PointsJoueur += 1;
+            SceneManager.LoadScene("MainMenu");
         }
         else if (other.CompareTag("ButIA"))
             {
                 Debug.Log("Points pour Ia");
                 PointsIa += 1;
-            }
+                SceneManager.LoadScene("MainMenu");
+        }
          
            
         }
