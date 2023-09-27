@@ -33,6 +33,7 @@ public class IA : MonoBehaviour
         shootFront
     };
 
+   
     private void Start()
     {
         rbIA = GetComponent<Rigidbody>();
@@ -56,22 +57,24 @@ public class IA : MonoBehaviour
    
     public Movement RandomMovement()
      {
-       
-         if (!haveBall)
-         {
-             return (Movement)UnityEngine.Random.Range(0,3);
-         }
-         else
-         {
-             return (Movement)UnityEngine.Random.Range(4,6);
-         }
+         
+             if (!haveBall)
+             {
+                 return (Movement)UnityEngine.Random.Range(0, 4);
+             }
+             else
+             {
+                 return (Movement)UnityEngine.Random.Range(5, 8);
+             }
+        
      }
 
-    private void Update()
+    /*private void Update()
     {
+        finDePartie = PlayerPrefs.GetString("finDePartie");
         if (canMove)
         {
-            transform.position = Vector3.Lerp(transform.position, targetPosition, smoothTime * Time.deltaTime);
+           
         }
-    }
+    }*/
 }

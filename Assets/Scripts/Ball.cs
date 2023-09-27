@@ -11,6 +11,7 @@ public class Ball: MonoBehaviour
     private Vector3 lastVelocity;
     private int PointsJoueur = 0;
     private int PointsIa = 0;
+    private string finDePartie; 
     void Start()
     {
         player = PlayerPrefs.GetString("players");
@@ -30,11 +31,13 @@ public class Ball: MonoBehaviour
 
             Debug.Log("Points pour joueur");
             PointsJoueur += 1;
+            PlayerPrefs.SetString("findDePartie", "true");
         }
         else if (other.CompareTag("ButIA"))
             {
                 Debug.Log("Points pour Ia");
                 PointsIa += 1;
+                PlayerPrefs.SetString("findDePartie", "true");
             }
          
            
