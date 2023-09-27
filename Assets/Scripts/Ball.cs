@@ -53,12 +53,12 @@ public class Ball: MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Mur") && transform.position.z<=5.0)
+        if (transform.position.z<=5.0)
         {
           
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 1);
         }
-        else if (collision.gameObject.CompareTag("Mur") && transform.position.z<=12.0)
+        else if (transform.position.z<=12.0)
         {
             
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -1);

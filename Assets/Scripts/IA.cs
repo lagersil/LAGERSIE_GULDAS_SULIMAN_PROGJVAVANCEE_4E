@@ -8,7 +8,6 @@ public class IA : MonoBehaviour
     public GameObject IAPlayer;
     private string player; 
     public GameObject balle;
-    private Rigidbody rbIA;
     private float moveSpeed = 5.0f;
     private float smoothTime = 0.5f;
     private float delay = 1.0f; 
@@ -16,11 +15,9 @@ public class IA : MonoBehaviour
     private float maxZ = 12.0f;
     private float minX = 1.0f;
     private float maxX = 8.0f;
-    private string finDePartie;
+    
     private bool haveBall = false;
     
-    private Vector3 targetPosition;
-    private Vector3 velocity = Vector3.zero;
     
     public enum Movement
     {
@@ -36,9 +33,8 @@ public class IA : MonoBehaviour
    
     private void Start()
     {
-        rbIA = GetComponent<Rigidbody>();
-        InvokeRepeating("RandomMovement", delay, delay);
-        finDePartie = PlayerPrefs.GetString("finDePartie");
+        
+        InvokeRepeating("RandomMovement", delay, delay); ;
         player = PlayerPrefs.GetString("players");
        // MonteCarlo();
     }
@@ -56,8 +52,8 @@ public class IA : MonoBehaviour
     }
    
     public Movement RandomMovement()
-     {
-         
+    {
+        Mouv(); 
              if (!haveBall)
              {
                  return (Movement)UnityEngine.Random.Range(0, 4);
@@ -69,12 +65,5 @@ public class IA : MonoBehaviour
         
      }
 
-    /*private void Update()
-    {
-        finDePartie = PlayerPrefs.GetString("finDePartie");
-        if (canMove)
-        {
-           
-        }
-    }*/
+   
 }

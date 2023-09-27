@@ -38,13 +38,13 @@ public class BallAttachment : MonoBehaviour
                 Player.GetComponent<CharacterControll>().canMove = true;
             }
         }
-        if (isAttached && players=="IA")
+       /* if (isAttached && players=="IA")
         {  
             IA.GetComponent<IA>().canMove = false;
             Invoke("DetachBall", 3.0f);
             IA.GetComponent<IA>().canMove = true;
             //DetachBall();
-        }
+        }*/
     }
 
     public void DetachBall()

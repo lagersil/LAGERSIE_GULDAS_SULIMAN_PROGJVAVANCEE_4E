@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     private string player; 
     public GameObject balle;
     private Rigidbody rbIA;
-    private float moveSpeed = 5.0f;
+    private float moveSpeed = 2.0f;
     private float smoothTime = 0.5f;
     private float delay = 1.0f; 
     private float minZ = 5.0f;
