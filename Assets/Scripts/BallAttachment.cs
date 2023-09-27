@@ -47,7 +47,7 @@ public class BallAttachment : MonoBehaviour
         }
     }
 
-    void DetachBall()
+    public void DetachBall()
     {
         FixedJoint fixedJoint = GetComponent<FixedJoint>();
         if (fixedJoint != null)
