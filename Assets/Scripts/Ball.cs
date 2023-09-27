@@ -12,6 +12,10 @@ public class Ball: MonoBehaviour
     private Vector3 lastVelocity;
     private int PointsJoueur = 0;
     private int PointsIa = 0;
+
+    public GameObject Panel_Win;
+    public GameObject Panel_Lose;
+
     void Start()
     {
         player = PlayerPrefs.GetString("players");
@@ -31,13 +35,15 @@ public class Ball: MonoBehaviour
 
             Debug.Log("Points pour joueur");
             PointsJoueur += 1;
-            SceneManager.LoadScene("MainMenu");
+            Panel_Win.SetActive(true);
+            //SceneManager.LoadScene("MainMenu");
         }
         else if (other.CompareTag("ButIA"))
             {
                 Debug.Log("Points pour Ia");
                 PointsIa += 1;
-                SceneManager.LoadScene("MainMenu");
+            Panel_Lose.SetActive(true);
+            //SceneManager.LoadScene("MainMenu");
         }
          
            
