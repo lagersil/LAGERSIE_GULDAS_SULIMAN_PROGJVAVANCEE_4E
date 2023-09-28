@@ -19,7 +19,45 @@ public class MCTS : MonoBehaviour
     private string finDePartie; 
     private Vector3 targetPosition;
     private Vector3 velocity = Vector3.zero;
+	
+	
+	private Node Select(Node node)
+    {
+        while (!node.IsTerminal() && node.HasUntriedActions())
+        {
+            return Expand(node);
+        }
 
+        if (node.HasChildren())
+        {
+            Node bestChild = SelectBestChild(node);
+            return Select(bestChild);
+        }
+
+        return node;
+    }
+	
+	private Node SelectBestChild(Node node)
+	{
+    	float explorationWeight = Mathf.Sqrt(2.0f); 
+
+    	Node bestChild = null;
+    	float bestUCB = float.MinValue;
+
+    	foreach (Node child in node.GetChildren())
+    	{
+        	float UCB = (child.GetValue() / child.GetVisits()) +
+                    	explorationWeight * Mathf.Sqrt(Mathf.Log(node.GetVisits()) / child.GetVisits());
+
+        	if (UCB > bestUCB)
+        	{
+            	bestUCB = UCB;
+            	bestChild = child;
+        	}
+    	}
+
+    	return bestChild;
+	}
 
     private void Start()
     {
@@ -39,23 +77,6 @@ public class MCTS : MonoBehaviour
             //int simulationResult = Simulate(expandedNode);
             //Backpropagate(expandedNode, simulationResult);
         }
-    }
-
-    private Node Select(Node node)
-    {
-        Node selectedChild = null;
-        int maxVisits = -1;
-
-        foreach (Node child in node.children)
-        {
-            if (child.visits > maxVisits)
-            {
-                maxVisits = child.visits;
-                selectedChild = child;
-            }
-        }
-
-        return selectedChild;
     }
 
     private Node Expand(Node node)
