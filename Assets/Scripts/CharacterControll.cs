@@ -1,60 +1,60 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 
-public class CharacterControll : MonoBehaviour
+public struct CharacterControll : IMouvement
 {
-    public GameObject Player;
-    public bool canMove = true;
-    private Rigidbody rbJoueur;
-    private float moveSpeed = 2.0f;
-    public float LimitMaxX = 0.9060148f;
 
-    public static event System.Action<Vector3> OnPlayerMove;
-   
-    // Start is called before the first frame update
-    void Start()
+    public Bounds position;
+    
+    public IMouvement.Movement getMove(bool balle)
     {
-        
-    }
+        if (!balle)
+        {
+            if (Input.GetKey(KeyCode.Z))
+            {
+                return IMouvement.Movement.Up;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                return IMouvement.Movement.Down;
 
-    public enum mouvementPlayer
-    {
-        Up, 
-        Right, 
-        Down, 
-        Left, 
-        None
-    }
+            }
+            else if (Input.GetKey(KeyCode.Q))
+            {
+                return IMouvement.Movement.Left;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                return IMouvement.Movement.Right;
+            }
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.Z))
+            {
+                return IMouvement.Movement.ShootUp;
 
-    public mouvementPlayer MovePlayer()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            return mouvementPlayer.Up;
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            return mouvementPlayer.Down;
-           
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
-        {
-            return mouvementPlayer.Left;
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            return mouvementPlayer.Right;
-        }
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                return IMouvement.Movement.ShootDown;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                return IMouvement.Movement.ShootFront;
+            }
 
-        return mouvementPlayer.None;
+            else if (Input.GetKey(KeyCode.Space))
+            {
+                return IMouvement.Movement.Shoot;
+            }
+        }
+        return IMouvement.Movement.None;
     }
  
-    void Update()
-    {
-       
-    }
   
 
 }
