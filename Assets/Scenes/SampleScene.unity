@@ -558,6 +558,8 @@ MonoBehaviour:
   score: 0
   canMove: 1
   balle: {fileID: 383830094}
+  arrow: {fileID: 541473560}
+  launchAngle: 45
 --- !u!4 &336024521
 Transform:
   m_ObjectHideFlags: 0
@@ -614,9 +616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56820a72bbf862547a4a092d95738ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
-  IAPlayer: {fileID: 449253585}
-  balle: {fileID: 383830094}
 --- !u!114 &449253591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,9 +628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3889e820ca760c643a897bb329b3ea57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowObject: {fileID: 541473560}
-  IA: {fileID: 449253585}
-  Player: {fileID: 1030518556}
   launchAngle: 45
 --- !u!54 &449253592
 Rigidbody:

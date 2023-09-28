@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,29 +11,50 @@ public class CharacterControll : MonoBehaviour
     private float moveSpeed = 2.0f;
     public float LimitMaxX = 0.9060148f;
 
-  
+    public static event System.Action<Vector3> OnPlayerMove;
+   
     // Start is called before the first frame update
     void Start()
     {
-        rbJoueur = GetComponent<Rigidbody>();
+        
     }
 
-    // Update is called once per frame
+    public enum mouvementPlayer
+    {
+        Up, 
+        Right, 
+        Down, 
+        Left, 
+        None
+    }
+
+    public mouvementPlayer MovePlayer()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            return mouvementPlayer.Up;
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            return mouvementPlayer.Down;
+           
+        }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            return mouvementPlayer.Left;
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            return mouvementPlayer.Right;
+        }
+
+        return mouvementPlayer.None;
+    }
+ 
     void Update()
     {
-        if (canMove)
-        {
-            float moveVertical = Input.GetAxis("Vertical");
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            Vector3 deplacement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-
-            // Calculer la nouvelle position sans dépasser la limite maximale sur l'axe X
-            Vector3 nouvellePosition = rbJoueur.position + (deplacement * moveSpeed * Time.fixedDeltaTime);
-            nouvellePosition.x = Mathf.Clamp(nouvellePosition.x,-10, LimitMaxX);
-
-            // Appliquer la nouvelle position au Rigidbody
-            rbJoueur.MovePosition(nouvellePosition);
-        }
+       
     }
+  
 
 }

@@ -28,42 +28,12 @@ public class Ball: MonoBehaviour
         lastVelocity = rb.velocity;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("But")) // Vérifie si la collision concerne le but.
-        {
-
-            Debug.Log("Points pour joueur");
-            PointsJoueur += 1;
-            Panel_Win.SetActive(true);
-            //SceneManager.LoadScene("MainMenu");
-        }
-        else if (other.CompareTag("ButIA"))
-            {
-                Debug.Log("Points pour Ia");
-                PointsIa += 1;
-            Panel_Lose.SetActive(true);
-            //SceneManager.LoadScene("MainMenu");
-        }
-         
+   
            
-        }
+    
        
     
     
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (transform.position.z<=5.0)
-        {
-          
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 1);
-        }
-        else if (transform.position.z<=12.0)
-        {
-            
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -1);
-        }
-        }
-    
+   
 
 }

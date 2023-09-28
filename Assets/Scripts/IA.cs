@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class IA : MonoBehaviour
 {
-    public bool canMove = true;
-    public GameObject IAPlayer;
+  
+   
     private string player; 
-    public GameObject balle;
+    
     private float moveSpeed = 5.0f;
     private float smoothTime = 0.5f;
     private float delay = 1.0f; 
@@ -36,7 +36,7 @@ public class IA : MonoBehaviour
         
         InvokeRepeating("RandomMovement", delay, delay); ;
         player = PlayerPrefs.GetString("players");
-       // MonteCarlo();
+     
     }
 
     private void Mouv()
@@ -65,5 +65,4 @@ public class IA : MonoBehaviour
         
      }
 
-   
 }
