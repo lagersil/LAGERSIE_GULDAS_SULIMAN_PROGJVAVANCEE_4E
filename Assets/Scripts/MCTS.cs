@@ -1,25 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class MCTS
-	private GameState game;
-	private CharacterControll Player;
-	private IA ia;
-	private Ball balle;
-	private Mouvement move;
-
+public class MCTS : MonoBehaviour
 {
-    public Node select(Node node)
+	private GameState game;
+	private Node node;
+	
+
+	public IMouvement.Movement RunMCTS(GameState initialState, int iterations)
 	{
-		while (!node.IsTerminal() && node.HasUntriedActions())
+		Node rootNode = new Node(initialState);	
+		
+		for(int i = 0; i < iterations; i++)
 		{
-			return Expand(node);
+			Node selectedNode = Select(rootNode);
+			Node expandedNode = Expand(selectedNode);
+			float simulationResult = Simulate(expandedNode);
+			Backpropagate(expandedNode, simulationResult);
 		}
 
-		if(node.HasChildren())
+		Node bestChild = SelectBestChild(root);
+		return bestChild.action;
+
+	}
+	
+    public Node Select(Node nodeRoot)
+    {
+	    Node node = nodeRoot;
+
+		while (node.GetChildren().Count > 0)
 		{
-			Node bestChild = SelectBestChild(Node);
+			Node bestChild = SelectBestChild(node);
 			return Select(bestChild);
 		}
 
@@ -27,64 +42,43 @@ public class MCTS
 	}
 
 
-	//UCB (Upper Confidence Bound) permet de vérifier qui est le meilleur enfant lors de la sélection
-	private Node SelectBestChild(Node node)
-	{
-		float explorationWeight = Mathf.Sqrt(2.0f);
-
-		Node bestChild = null;
-		float bestUBD = float.MinValue;
-
-		foreach(Node child in node.GetChildren())
-		{
-			float UCB = (child.GetValue() / child.GetVisite() + explorationWeight * Mathf.Sqrt(Mathf.Log(node.GetVisits()) / child.GetVisits());
-			
-			if (UCB > bestUCB)
-            {
-                bestUCB = UCB;
-                bestChild = child;
-            }
-        }
-
-        return bestChild;
-		}
-	}
-
-
 	 public Node Expand(Node node)
     {
-        if (node.HasUntriedActions())
-        {
-            Action untriedAction = node.GetUntriedAction();
+	    
+	    List<IMouvement.Movement> coupsPossible = node.GetState().;
 
-            GameState newState = node.GetState().ApplyAction(untriedAction);
+	    foreach (GameState nextState in coupsPossible)
+	    {
+		    Node newChild = new Node(nextState);
+		    newChild.parent = node;
+		    node.children.Add(newChild);
+	    }
+	    Node selectedChild = Select(node);
 
-            Node newChild = new Node(newState, untriedAction, node);
-
-            node.AddChild(newChild);
-
-            return newChild;
-        }
-        else
-        {
-            throw new InvalidOperationException("Toutes les actions ont déjà été explorées.");
-        }
+	    return selectedChild;
+       
     }
+	 
+	 //UCB (Upper Confidence Bound) permet de vérifier qui est le meilleur enfant lors de la sélection
+	 private Node SelectBestChild(Node node)
+	 {
+		 float explorationWeight = Mathf.Sqrt(2.0f);
 
-	public void RunMCTS(Game initialState, int iterations)
-	{
-		Node root = new Node(initialState);
-		
-		for(int i = 0; i < iterations; i++)
-		{
-			Node selectedNode = Select(root);
-            Node expandedNode = Expand(selectedNode);
-            float simulationResult = Simulate(expandedNode);
-            Backpropagate(expandedNode, simulationResult);
-		}
+		 Node bestChild = null;
+		 float bestUCB = float.MinValue;
 
-		Node bestChild = SelectBestChild(root);
-        return bestChild.Action;
+		 foreach (Node child in node.GetChildren())
+		 {
+			 float UCB = (child.GetValue() / child.GetVisits() +
+			              explorationWeight * Mathf.Sqrt(2 * Mathf.Log(node.GetVisits()) / child.GetVisits()));
 
-	}
+			 if (UCB > bestUCB)
+			 {
+				 bestUCB = UCB;
+				 bestChild = child;
+			 }
+		 }
+
+		 return bestChild;
+	 }
 }
