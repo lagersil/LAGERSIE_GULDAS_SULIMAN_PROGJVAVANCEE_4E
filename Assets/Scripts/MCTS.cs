@@ -19,11 +19,13 @@ public class MCTS
     private float explorationParameter=0.8f;
     public Bounds position;
     public IMouvement.Movement bestBB;
+    private List<Node> all; 
     public MCTS(int maxIterations)
     {
         this.maxIterations = maxIterations;
         this.rootState = new GameState();
         this.startNode = new Node(rootState);
+        this.all= startNode.GetAllNodes(startNode);
     }
 
     public IMouvement.Movement Montecarlo()
@@ -38,8 +40,7 @@ public class MCTS
             Backpropagate(newNode,victoire);
             
         }
-        
-      bestBB = rootState.GetLastAction();
+        bestBB = rootState.GetLastAction();
       Debug.Log(bestBB);
       return bestBB;
     }
@@ -71,12 +72,12 @@ public class MCTS
 
     Node Select(float explorationParameter)
     {
-        int rnd = UnityEngine.Random.Range(0, startNode.children.Count());
+        int rnd = UnityEngine.Random.Range(0, all.Count());
         
         pourcentage = UnityEngine.Random.Range(0f, 1f);
         if (pourcentage > explorationParameter)
         {
-            startNode = startNode.children[rnd];
+            startNode = all[rnd];
         }
         else
         {
@@ -90,10 +91,7 @@ public class MCTS
 
     Node Expand(Node node)
     {
-        if (node.IsFullyExpanded())
-        {
-            return node;
-        }
+     
         
         foreach (IMouvement.Movement move in rootState.ReturnMove())
         {

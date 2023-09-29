@@ -14,6 +14,21 @@ public class Node
     public GameState state;
     public IMouvement.Movement lastMove; 
 
+    
+    public List<Node> GetAllNodes(Node rootNode)
+    {
+        List<Node> allNodes = new List<Node>();
+        TraverseTree(rootNode, allNodes);
+        return allNodes;
+    }
+    private void TraverseTree(Node currentNode, List<Node> allNodes)
+    {
+        allNodes.Add(currentNode);
+        foreach (Node child in currentNode.children)
+        { 
+            TraverseTree(child, allNodes);
+        }
+    }
     public Node(GameState initialState)
     {
         parent = null;
