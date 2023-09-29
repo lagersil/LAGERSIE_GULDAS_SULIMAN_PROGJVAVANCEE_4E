@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Xml.Schema;
 using DefaultNamespace;
 using UnityEngine;
-using UnityEngine.iOS;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
 
