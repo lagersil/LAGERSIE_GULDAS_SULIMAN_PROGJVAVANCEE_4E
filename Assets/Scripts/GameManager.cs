@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         if (game.victoireIA)
         {
             PanelLose.SetActive(true);
-           
+            StartCoroutine(LoadMainMenuAfterDelay());
             
         }
         else if (game.victoireJoueur)
