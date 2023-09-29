@@ -67,16 +67,16 @@ public struct GameState
         switch (mouvementI)
         {
             case IMouvement.Movement.Up:
-                mcts.position.center += Vector3.forward * (moveSpeed * delta);
+                ia.position.center += Vector3.forward * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.Down:
-                mcts.position.center += - Vector3.forward * (moveSpeed * delta);
+                ia.position.center += - Vector3.forward * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.Left:
-                mcts.position.center += - Vector3.right * (moveSpeed * delta);
+                ia.position.center += - Vector3.right * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.Right:
-                mcts.position.center +=  Vector3.right * (moveSpeed * delta);
+                ia.position.center +=  Vector3.right * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.ShootDown:
                 balle.direction= new Vector3(-1,0,-1).normalized;
