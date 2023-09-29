@@ -13,7 +13,7 @@ public struct CharacterControll : IMouvement
     {
         if (!balle)
         {
-            if (Input.GetKey(KeyCode.Z))
+            if (Input.GetKey(KeyCode.W))
             {
                 return IMouvement.Movement.Up;
             }
@@ -22,7 +22,7 @@ public struct CharacterControll : IMouvement
                 return IMouvement.Movement.Down;
 
             }
-            else if (Input.GetKey(KeyCode.Q))
+            else if (Input.GetKey(KeyCode.A))
             {
                 return IMouvement.Movement.Left;
             }
@@ -33,7 +33,7 @@ public struct CharacterControll : IMouvement
         }
         else
         {
-            if (Input.GetKey(KeyCode.Z))
+            if (Input.GetKey(KeyCode.W))
             {
                 return IMouvement.Movement.ShootUp;
 

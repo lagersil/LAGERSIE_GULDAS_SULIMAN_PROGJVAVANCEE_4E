@@ -4,33 +4,21 @@ using UnityEngine;
 [System.Serializable]
 public struct GameState
 {
-    
-    /* delta time gamemanager
-     * vitesse de simu gamestate
-     */
-    
     public CharacterControll joueur;
     public IA ia;
     public Ball balle;
     private const float moveSpeed = 5.0f;
-    private bool tirer;
-   // public Bounds arrow;
-   //Faire constructeur 
     private bool IaHaveBall; 
     private bool PlayerHaveBall; 
     private const float minZ = 5.0f;
     private const float maxZ = 12.0f;
     private const float minX = 1.0f;
     private const float maxX = 8.0f;
+    private bool victoireJoueur;
+    private bool victoireIA;
+    private bool finDePartie;
 
-
-    /*Condition victoire défaite à mettre en place
-     *
-     *
-     *
-     *
-     * 
-     */
+   
     public void Tick(float delta)
     {
         switch (joueur.getMove(PlayerHaveBall))
@@ -114,8 +102,11 @@ public struct GameState
         fixer();
         But();
         Rebond();
+        Fin();
 
     }
+
+    
     public GameState(CharacterControll joueur, IA ia, Ball balle)
     {
         this.joueur=joueur ;
@@ -123,7 +114,10 @@ public struct GameState
         this.balle = balle;
         this.PlayerHaveBall = false;
         this.IaHaveBall = false;
-        this.tirer = false;
+        this.victoireJoueur = false;
+        this.victoireIA = false;
+        this.finDePartie = false;
+        
     }
     // ReSharper disable Unity.PerformanceAnalysis
     private void But()
@@ -132,12 +126,16 @@ public struct GameState
         {
 
             Debug.Log("Points pour joueur");
+            victoireJoueur = true;
+            victoireIA = false;
             //Panel_Win.SetActive(true);
             //SceneManager.LoadScene("MainMenu");
         }
         else if (balle.position.center.x<-6f)
         {
             Debug.Log("Points pour Ia");
+            victoireJoueur = false;
+            victoireIA = true;
             //Panel_Lose.SetActive(true);
             //SceneManager.LoadScene("MainMenu");
         }
@@ -149,17 +147,14 @@ public struct GameState
         {
         
             balle.direction.z*= -1;
-            //balle.direction.x-= balle.direction.x;
+
 
         }
-      
-        
-         
     }
 
-    public void victoire()
+    public bool Fin()
     {
-        //A FAIRE;
+        return finDePartie = true; 
     }
     
     public void fixer()
@@ -182,15 +177,6 @@ public struct GameState
             IaHaveBall = false; 
         }
     }
-  /*  public void DetachBall(float angle, float delta)
-    {
-        if(tirer==true){
-            float launchAngleRad = angle * Mathf.Deg2Rad;
-            Vector3 launchDirection = new Vector3(Mathf.Cos(launchAngleRad), 0.0f, Mathf.Sin(launchAngleRad));
-         
-            float launchForce = 10.0f; 
-            balle.position.center += launchDirection * launchForce * delta;
-        }
-    }*/
+    
     
 }

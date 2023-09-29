@@ -13,10 +13,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameObject balleGO;
     private string finDePartie;
-    public GameObject arrowGO;
-    //private ArrowController arrowController;
-    
     private GameState game;
+    float[] possibleAngles = { 45f, -45f, 180f, 135f, -135f };
 
     private void Start()
     { 
@@ -24,14 +22,21 @@ public class GameManager : MonoBehaviour
         game.joueur = new CharacterControll();
         game.ia = new IA();
         game.balle = new Ball();
-       
+        
+        float randomAngle = possibleAngles[Random.Range(0, possibleAngles.Length)];
+    
+        float randomAngleRad = randomAngle * Mathf.Deg2Rad;
+        Vector3 randomDirection = new Vector3(Mathf.Cos(randomAngleRad), 0f, 0f);
+        
+        game.balle.direction = randomDirection * 5.0f * Time.deltaTime;
         game.joueur.position.center = joueurGO.transform.position;
         game.ia.position.center = iaGO.transform.position;
         game.balle.position.center = balleGO.transform.position;
         game.joueur.position.size = joueurGO.transform.lossyScale;
         game.ia.position.size = iaGO.transform.lossyScale;
         game.balle.position.size = balleGO.transform.lossyScale;
-        //tout initialiser correctement (size etc)
+      
+   
 
     }
     void HandlePlayerMove()
@@ -47,13 +52,7 @@ public class GameManager : MonoBehaviour
         game.Tick(Time.deltaTime); 
         HandlePlayerMove();
     }
-    
-    /*Condition victoire à vérifier
-     *
-     *
-     *
-     * 
-     */
+  
 
     
 }
