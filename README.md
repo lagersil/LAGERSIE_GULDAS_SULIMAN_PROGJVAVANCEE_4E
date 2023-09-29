@@ -1,4 +1,4 @@
-# LAGERSI_GULDAS_SULIMAN_PROGJVAVANCEE_4E
+# LAGERSIE_GULDAS_SULIMAN_PROGJVAVANCEE_4E
 WindJammer MCTS 
 
 - pour les boutons :
@@ -18,4 +18,5 @@ WindJammer MCTS
   les materiaux sont ceux de blender pour le terrain.
   (les autres materiaux sont de unity.)
 
-
+→ Les touches pour le joueur initiale sont:  ZQSD pour bouger, Z(viser vers le haut) S(viser vers le bas) D (viser devant soit) et Espace pour tirer.
+→ Les touches pour le deuxième joueur sont:  UHJK pour bouger, U(viser vers le haut) J(viser vers le bas) H (viser devant soit) et P pour tirer.
