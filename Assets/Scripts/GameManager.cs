@@ -36,17 +36,17 @@ public class GameManager : MonoBehaviour
         
         game.balle.direction = randomDirection * 5.0f * Time.deltaTime;
         game.joueur.position.center = joueurGO.transform.position;
-        game.ia.position.center = iaGO.transform.position;
+        game.mcts.position.center = iaGO.transform.position;
         game.balle.position.center = balleGO.transform.position;
         game.joueur.position.size = joueurGO.transform.lossyScale;
-        game.ia.position.size = iaGO.transform.lossyScale;
+        game.mcts.position.size = iaGO.transform.lossyScale;
         game.balle.position.size = balleGO.transform.lossyScale;
     }
     void HandlePlayerMove()
     {
   
         joueurGO.transform.position = game.joueur.position.center;
-        iaGO.transform.position = game.ia.position.center;
+        iaGO.transform.position = game.mcts.position.center;
         balleGO.transform.position = game.balle.position.center;
     }
  
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        game.Tick(Time.deltaTime,game.joueur.getMove(game.PlayerHaveBall),game.ia.getMove(game.IaHaveBall)); 
+        game.Tick(Time.deltaTime,game.joueur.getMove(game.PlayerHaveBall),game.mcts.FindBestMove(game)); 
         
         HandlePlayerMove();
         WinLosePanel();

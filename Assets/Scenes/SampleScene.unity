@@ -156,6 +156,8 @@ MonoBehaviour:
   joueurGO: {fileID: 1030518556}
   iaGO: {fileID: 449253585}
   balleGO: {fileID: 383830094}
+  PanelLose: {fileID: 984924109}
+  PanelWin: {fileID: 984924108}
 --- !u!4 &336024521
 Transform:
   m_ObjectHideFlags: 0
@@ -183,14 +185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bafec871fabfd644a53c82480d2f9a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState:
-    IaHaveBall: 0
-    PlayerHaveBall: 0
-    victoireJoueur: 0
-    victoireIA: 0
-    coupsPossible: 
-  PanelLose: {fileID: 984924109}
-  PanelWin: {fileID: 984924108}
 --- !u!1 &383830094 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2364180264263678451, guid: ed02780afe3e29a4ea8194ddc29eaa80, type: 3}

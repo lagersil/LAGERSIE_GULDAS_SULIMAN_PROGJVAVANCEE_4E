@@ -1,115 +1,125 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using AOT;
 using DefaultNamespace;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MCTS
 {
-   private int maxIterations;
-    private GameState rootState;
-    private float pourcentage; 
-    IMouvement.Movement selected1 = IMouvement.Movement.None;
-    IMouvement.Movement selected2 = IMouvement.Movement.None;
-    private int nbWin;
-    private Node startNode;
-    private float explorationParameter=0.8f;
-    public Bounds position;
-    public IMouvement.Movement bestBB;
-    private List<Node> all; 
+    private Node rootNode;
+    private int maxIterations;
+    public Bounds position; 
     public MCTS(int maxIterations)
     {
         this.maxIterations = maxIterations;
-        this.rootState = new GameState();
-        this.startNode = new Node(rootState);
-        this.all= startNode.GetAllNodes(startNode);
     }
 
-    public IMouvement.Movement Montecarlo()
+    public IMouvement.Movement FindBestMove(GameState initialState)
     {
-        startNode = new Node(rootState);
+        rootNode = new Node(IMouvement.Movement.None, null);
 
-        for (int i = 0; i < maxIterations; ++i)
+        for (int i = 0; i < maxIterations; i++)
         {
-            Node selectedNode = Select(explorationParameter);
-            Node newNode = Expand(selectedNode);
-            int victoire = Simulation(30);
-            Backpropagate(newNode,victoire);
-            
-        }
-        bestBB = rootState.GetLastAction();
-      Debug.Log(bestBB);
-      return bestBB;
-    }
-
-    
-
-    int Simulation(int nbSimu)
-    {
-        GameState clone = new GameState(rootState);
-        for (int i = 0; i < nbSimu; i++)
-        {
-            while (!clone.Fin())
-            {
-                List<IMouvement.Movement> mouvementsIa =  clone.coupsPossible;
-                List<IMouvement.Movement> mouvementsJ = clone.coupsPossible;
-                selected1 =clone.rnd(mouvementsIa); 
-                selected2 =clone.rnd(mouvementsJ);
-                clone.Tick(1/60,selected2,selected1);
-            }
-
-            if (clone.victoireIA)
-            {
-                nbWin++;
-            }
+            Node selectedNode = Selection(rootNode);
+            Node expandedNode = Expansion(selectedNode, initialState);
+            int simulationResult = Simulation(expandedNode, initialState);
+            Backpropagation(expandedNode, simulationResult);
         }
 
-        return nbWin; 
+       
+        return SelectBestMove(rootNode);
     }
 
-    Node Select(float explorationParameter)
+    private Node Selection(Node node)
     {
-        int rnd = UnityEngine.Random.Range(0, all.Count());
-        
-        pourcentage = UnityEngine.Random.Range(0f, 1f);
-        if (pourcentage > explorationParameter)
+        if (node.IsLeaf())
         {
-            startNode = all[rnd];
+            return node; // Si le nœud est une feuille, le sélectionner directement
         }
         else
         {
-            Node bestChild = startNode.GetBestChild();
-            startNode = bestChild;
-        }
-        
+            List<Node> unexploredChildren = new List<Node>();
+            List<Node> exploredChildren = new List<Node>();
 
-        return startNode; 
+            foreach (Node child in node.children)
+            {
+                if (child.visits == 0)
+                {
+                    unexploredChildren.Add(child); 
+                }
+                else
+                {
+                    exploredChildren.Add(child); 
+                }
+            }
+
+            if (unexploredChildren.Count > 0)
+            {
+                return unexploredChildren[UnityEngine.Random.Range(0, unexploredChildren.Count)]; // Sélectionnez aléatoirement parmi les nœuds non explorés
+            }
+            else
+            {
+                return exploredChildren[UnityEngine.Random.Range(0, exploredChildren.Count)]; // Sélectionnez aléatoirement parmi les nœuds explorés
+            }
+        }
     }
 
-    Node Expand(Node node)
+    private Node Expansion(Node node, GameState initialState)
     {
-     
-        
-        foreach (IMouvement.Movement move in rootState.ReturnMove())
+        node.ExpandNode(initialState);
+        if (node.children.Count > 0)
         {
-            GameState newState = new GameState(rootState);
-            newState.Tick(1/60,IMouvement.Movement.None,move);
-            Node newChild = new Node(newState);
-            node.children.Add(newChild);
+            return node.children[UnityEngine.Random.Range(0, node.children.Count)];
         }
-
-        return node; 
+        return node;
     }
-    private void Backpropagate(Node node, float result)
+
+    private int Simulation(Node node, GameState initialState)
+    {
+        GameState currentState = new GameState(initialState); 
+
+            while (!currentState.Fin()) 
+            {
+                List<IMouvement.Movement> legalMoves = currentState.ReturnLegalMove();
+              
+                if (legalMoves.Count > 0)
+                {
+                    int randomMoveIndex = UnityEngine.Random.Range(0, legalMoves.Count);
+                    IMouvement.Movement randomMove = legalMoves[randomMoveIndex];
+                    currentState.Tick(1f / 60f, IMouvement.Movement.None, randomMove);
+                    
+                }
+            }
+          
+            if (currentState.victoireIA)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        
+    }
+
+    private void Backpropagation(Node node, int result)
     {
         while (node != null)
         {
-            node.Update(result,30);
+            node.Update(result);
             node = node.parent;
         }
     }
-   
+
+    private IMouvement.Movement SelectBestMove(Node rootNode)
+    {
+        if (rootNode.children.Count > 0)
+        {
+            int randomChildIndex = UnityEngine.Random.Range(0, rootNode.children.Count);
+            Node randomChild = rootNode.children[randomChildIndex];
+            return randomChild.move;
+        }
+
+      
+        return IMouvement.Movement.None;
+    }
 }

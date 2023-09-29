@@ -1,77 +1,53 @@
-using System;
 using System.Collections.Generic;
 using DefaultNamespace;
-using UnityEngine;
-
 
 public class Node
 {
+    public IMouvement.Movement move;
     public Node parent;
     public List<Node> children;
-    public int visitCount;
-    public float totalReward;
-    public float Value;
-    public GameState state;
-    public IMouvement.Movement lastMove; 
+    public int wins;
+    public int visits;
 
-    
-    public List<Node> GetAllNodes(Node rootNode)
+    public Node(IMouvement.Movement m, Node p)
     {
-        List<Node> allNodes = new List<Node>();
-        TraverseTree(rootNode, allNodes);
-        return allNodes;
-    }
-    private void TraverseTree(Node currentNode, List<Node> allNodes)
-    {
-        allNodes.Add(currentNode);
-        foreach (Node child in currentNode.children)
-        { 
-            TraverseTree(child, allNodes);
-        }
-    }
-    public Node(GameState initialState)
-    {
-        parent = null;
+        move = m;
+        parent = p;
         children = new List<Node>();
-        visitCount = 0;
-        totalReward = 0;
-
-        state = initialState;
-        lastMove = IMouvement.Movement.None; 
+        wins = 0;
+        visits = 0;
     }
 
-    public void Update(float reward,int nbVisite)
+    public void ExpandNode(GameState state)
     {
-        visitCount+=nbVisite;
-        totalReward += reward;
-    }
-
-    
-
-    public bool IsFullyExpanded()
-    {
-        return children.Count == 5;
-    }
-
-    public Node GetBestChild()
-    {
-        Node bestChild = null;
-        float bestTotalReward = float.MinValue;
-
-        foreach (Node child in children)
+        if (!state.Fin())
         {
-            if (child.totalReward > bestTotalReward)
+            List<IMouvement.Movement> legalMoves = state.ReturnLegalMove();
+            foreach (IMouvement.Movement m in legalMoves)
             {
-                bestTotalReward = child.totalReward;
-                bestChild = child;
+                Node nc = new Node(m, this);
+                children.Add(nc);
             }
         }
+    }
 
-        if (bestChild != null)
+    public void Update(int r)
+    {
+        visits++;
+        if (r == 1) // Assuming "win" is defined as 1
         {
-            lastMove = bestChild.state.GetLastAction();
+            wins++;
         }
+    }
 
-        return bestChild;
+    public bool IsLeaf()
+    {
+        return children.Count == 0;
+    }
+
+    public bool HasParent()
+    {
+        return parent != null;
     }
 }
+

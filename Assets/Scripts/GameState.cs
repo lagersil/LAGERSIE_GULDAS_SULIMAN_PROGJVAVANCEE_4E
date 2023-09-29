@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.iOS;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
 
@@ -69,16 +70,16 @@ public struct GameState
         switch (mouvementI)
         {
             case IMouvement.Movement.Up:
-                ia.position.center += Vector3.forward * (moveSpeed * delta);
+                mcts.position.center += Vector3.forward * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.Down:
-                ia.position.center += - Vector3.forward * (moveSpeed * delta);
+                mcts.position.center += - Vector3.forward * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.Left:
-                ia.position.center += - Vector3.right * (moveSpeed * delta);
+                mcts.position.center += - Vector3.right * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.Right:
-                ia.position.center +=  Vector3.right * (moveSpeed * delta);
+                mcts.position.center +=  Vector3.right * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.ShootDown:
                 balle.direction= new Vector3(-1,0,-1).normalized;
@@ -128,7 +129,7 @@ public struct GameState
         this.finDePartie = false;
         this.coupsPossible=new List<IMouvement.Movement>();
         this.random = new Random();
-        this.mcts = new MCTS(30);
+        this.mcts = new MCTS(5);
         this.lastAction = IMouvement.Movement.None; 
     }
     // ReSharper disable Unity.PerformanceAnalysis
@@ -140,6 +141,7 @@ public struct GameState
             Debug.Log("Points pour joueur");
             victoireJoueur = true;
             victoireIA = false;
+            finDePartie = true; 
             //Panel_Win.SetActive(true);
             //SceneManager.LoadScene("MainMenu");
 
@@ -149,6 +151,7 @@ public struct GameState
             Debug.Log("Points pour Ia");
             victoireJoueur = false;
             victoireIA = true;
+            finDePartie = true; 
 
         }
     }
@@ -167,7 +170,9 @@ public struct GameState
    
     public bool Fin()
     {
-        return finDePartie = true; 
+        
+        Debug.Log(finDePartie);
+        return finDePartie;
     }
 
     public IMouvement.Movement rnd(List<IMouvement.Movement> mouv)
@@ -176,12 +181,12 @@ public struct GameState
         int nombreAleatoire = UnityEngine.Random.Range(0, 8);
         return mouv[nombreAleatoire]; 
     }
-    public List<IMouvement.Movement> ReturnMove()
+    public List<IMouvement.Movement> ReturnLegalMove()
     {
-        List<IMouvement.Movement> coupsPossible = new();
+        List<IMouvement.Movement> coupsPossible = new List<IMouvement.Movement>();
         if (!PlayerHaveBall)
         {
-            for (int i = 0; i <= 4; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 IMouvement.Movement mouv = (IMouvement.Movement)i;
                 coupsPossible.Add(mouv);
@@ -190,7 +195,7 @@ public struct GameState
         }
         if (!IaHaveBall)
         {
-            for (int i = 0; i <= 4; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 IMouvement.Movement mouv = (IMouvement.Movement)i;
                 coupsPossible.Add(mouv);
@@ -199,7 +204,7 @@ public struct GameState
         }
         else if(PlayerHaveBall)
         {
-            for (int i = 5; i <= 8; i++)
+            for (int i = 4; i <= 8; i++)
             {
                 IMouvement.Movement mouv = (IMouvement.Movement)i;
                 coupsPossible.Add(mouv);
@@ -207,7 +212,7 @@ public struct GameState
         }
         else if (IaHaveBall)
         {
-            for (int i = 5; i <= 8; i++)
+            for (int i = 4; i <= 8; i++)
             {
                 IMouvement.Movement mouv = (IMouvement.Movement)i;
                 coupsPossible.Add(mouv);
@@ -221,12 +226,14 @@ public struct GameState
         if (joueur.position.Intersects(balle.position))
         {
             balle.position.center = joueur.position.ClosestPoint(balle.position.center)+ new Vector3(balle.position.extents.x, 0, 0);
+            Debug.Log("eh");
             PlayerHaveBall = true;
             IaHaveBall = false; 
         }
-        else if (ia.position.Intersects(balle.position))
+        else if (mcts.position.Intersects(balle.position))
         {
-            balle.position.center = ia.position.ClosestPoint(balle.position.center)- new Vector3(balle.position.extents.x, 0, 0);
+            balle.position.center = mcts.position.ClosestPoint(balle.position.center)- new Vector3(balle.position.extents.x, 0, 0);
+            Debug.Log("eh");
             PlayerHaveBall = false;
             IaHaveBall = true; 
         }
@@ -249,7 +256,7 @@ public struct GameState
         finDePartie = false;
         coupsPossible=new List<IMouvement.Movement>();
         random = new Random();
-        mcts = new MCTS(30);
+        mcts = new MCTS(5);
         lastAction = IMouvement.Movement.None;
        
     }
