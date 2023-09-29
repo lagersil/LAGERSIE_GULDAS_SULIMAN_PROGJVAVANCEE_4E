@@ -18,7 +18,7 @@ public struct GameState
     private const float maxZ = 12.0f;
     private const float minX = 1.0f;
     private const float maxX = 8.0f;
-    private bool victoireJoueur;
+    public bool victoireJoueur;
     public bool victoireIA;
     private bool finDePartie;
     private IMouvement.Movement lastAction; 
@@ -146,8 +146,7 @@ public struct GameState
             Debug.Log("Points pour Ia");
             victoireJoueur = false;
             victoireIA = true;
-            //Panel_Lose.SetActive(true);
-            //SceneManager.LoadScene("MainMenu");
+            
         }
     }
     private void Rebond()

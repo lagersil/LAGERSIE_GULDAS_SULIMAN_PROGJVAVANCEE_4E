@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class WinLose : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
     public void Replay()
     {
         SceneManager.LoadScene("SampleScene");
