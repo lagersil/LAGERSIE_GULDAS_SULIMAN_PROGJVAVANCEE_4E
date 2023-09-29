@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.Audio;
 
 public class SettingMenu : MonoBehaviour
 {
     public TMPro.TMP_Dropdown resolutionDropdown;
-    
+    public AudioMixer audioMixer;
+
     Resolution[] resolutions;
-    
+
     public void Start()
     {
-        resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height}).Distinct().ToArray();
+        resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height }).Distinct().ToArray();
         resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
@@ -32,13 +34,13 @@ public class SettingMenu : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 
-        Screen.fullScreen = true;   
+        Screen.fullScreen = true;
     }
 
     public void setVolume(float volume)
     {
-        Debug.Log(volume);
-        //audioMixer.SetFloat("volume", volume);
+        //Debug.Log(volume);
+        audioMixer.SetFloat("volume", volume);
     }
 
     public void setFullScreen(bool isfullscreen)
@@ -48,7 +50,7 @@ public class SettingMenu : MonoBehaviour
 
     public void setResolution(int resolutionIndex)
     {
-       Resolution resolution = resolutions[resolutionIndex];
+        Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 }

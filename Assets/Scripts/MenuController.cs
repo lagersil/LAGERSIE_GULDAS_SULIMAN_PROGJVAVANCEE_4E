@@ -35,8 +35,8 @@ public class MenuController : MonoBehaviour
     }
 
     public void CloseSettingsWindow()
-    { 
-        settingsWindow.SetActive(false); 
+    {
+        settingsWindow.SetActive(false);
     }
 
     public void QuitGame()
