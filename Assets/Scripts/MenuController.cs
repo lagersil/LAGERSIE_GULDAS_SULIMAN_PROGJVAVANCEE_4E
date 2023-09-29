@@ -21,7 +21,7 @@ public class MenuController : MonoBehaviour
 
     public void StartGame_VS()
     {
-        SceneManager.LoadScene("1v1");
+        SceneManager.LoadScene("");
     }
 
     public void choixGame()
