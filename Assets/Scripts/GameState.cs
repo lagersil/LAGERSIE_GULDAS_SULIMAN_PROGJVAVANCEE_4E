@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using Random = System.Random;
 
 [System.Serializable]
 public struct GameState
@@ -7,6 +10,7 @@ public struct GameState
     public CharacterControll joueur;
     public IA ia;
     public Ball balle;
+    public MCTS mcts; 
     private const float moveSpeed = 5.0f;
     public bool IaHaveBall; 
     public bool PlayerHaveBall; 
@@ -15,9 +19,11 @@ public struct GameState
     private const float minX = 1.0f;
     private const float maxX = 8.0f;
     private bool victoireJoueur;
-    private bool victoireIA;
+    public bool victoireIA;
     private bool finDePartie;
-
+    private IMouvement.Movement lastAction; 
+    Random random ;
+    public List<IMouvement.Movement> coupsPossible; 
    
     public void Tick(float delta, IMouvement.Movement mouvementJ, IMouvement.Movement mouvementI)
     {
@@ -61,16 +67,16 @@ public struct GameState
         switch (mouvementI)
         {
             case IMouvement.Movement.Up:
-                ia.position.center += Vector3.forward * (moveSpeed * delta);
+                mcts.position.center += Vector3.forward * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.Down:
-                ia.position.center += - Vector3.forward * (moveSpeed * delta);
+                mcts.position.center += - Vector3.forward * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.Left:
-                ia.position.center += - Vector3.right * (moveSpeed * delta);
+                mcts.position.center += - Vector3.right * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.Right:
-                ia.position.center +=  Vector3.right * (moveSpeed * delta);
+                mcts.position.center +=  Vector3.right * (moveSpeed * delta);
                 break;
             case  IMouvement.Movement.ShootDown:
                 balle.direction= new Vector3(-1,0,-1).normalized;
@@ -90,9 +96,9 @@ public struct GameState
                 break;
         }
 
-        ia.position.center = new Vector3(Mathf.Clamp(ia.position.center.x, minX, maxX),
-            Mathf.Clamp(ia.position.center.y, 0.99f, 0.99f),
-            Mathf.Clamp(ia.position.center.z, minZ, maxZ));
+        mcts.position.center = new Vector3(Mathf.Clamp(mcts.position.center.x, minX, maxX),
+            Mathf.Clamp(mcts.position.center.y, 0.99f, 0.99f),
+            Mathf.Clamp(mcts.position.center.z, minZ, maxZ));
 
         if (!(PlayerHaveBall || IaHaveBall))
         {
@@ -103,10 +109,11 @@ public struct GameState
         But();
         Rebond();
         Fin();
+        lastAction = mouvementI;
 
     }
-
     
+  
     public GameState(CharacterControll joueur, IA ia, Ball balle)
     {
         this.joueur=joueur ;
@@ -117,7 +124,10 @@ public struct GameState
         this.victoireJoueur = false;
         this.victoireIA = false;
         this.finDePartie = false;
-        
+        this.coupsPossible=new List<IMouvement.Movement>();
+        this.random = new Random();
+        this.mcts = new MCTS(30);
+        this.lastAction = IMouvement.Movement.None; 
     }
     // ReSharper disable Unity.PerformanceAnalysis
     private void But()
@@ -152,11 +162,58 @@ public struct GameState
         }
     }
 
+   
     public bool Fin()
     {
         return finDePartie = true; 
     }
-    
+
+    public IMouvement.Movement rnd(List<IMouvement.Movement> mouv)
+    {
+
+        int nombreAleatoire = UnityEngine.Random.Range(0, 8);
+        return mouv[nombreAleatoire]; 
+    }
+    public List<IMouvement.Movement> ReturnMove()
+    {
+        List<IMouvement.Movement> coupsPossible = new();
+        if (!PlayerHaveBall)
+        {
+            for (int i = 0; i <= 4; i++)
+            {
+                IMouvement.Movement mouv = (IMouvement.Movement)i;
+                coupsPossible.Add(mouv);
+            }
+            
+        }
+        if (!IaHaveBall)
+        {
+            for (int i = 0; i <= 4; i++)
+            {
+                IMouvement.Movement mouv = (IMouvement.Movement)i;
+                coupsPossible.Add(mouv);
+            }
+
+        }
+        else if(PlayerHaveBall)
+        {
+            for (int i = 5; i <= 8; i++)
+            {
+                IMouvement.Movement mouv = (IMouvement.Movement)i;
+                coupsPossible.Add(mouv);
+            }
+        }
+        else if (IaHaveBall)
+        {
+            for (int i = 5; i <= 8; i++)
+            {
+                IMouvement.Movement mouv = (IMouvement.Movement)i;
+                coupsPossible.Add(mouv);
+            }
+        }
+        coupsPossible.Add(IMouvement.Movement.None);
+        return coupsPossible; 
+    }
     public void fixer()
     {
         if (joueur.position.Intersects(balle.position))
@@ -178,5 +235,24 @@ public struct GameState
         }
     }
     
-    
+    public GameState(GameState Copy)
+    {
+        joueur=Copy.joueur ;
+        ia=Copy.ia;
+        balle = Copy.balle;
+        PlayerHaveBall = false;
+        IaHaveBall = false;
+        victoireJoueur = false;
+        victoireIA = false;
+        finDePartie = false;
+        coupsPossible=new List<IMouvement.Movement>();
+        random = new Random();
+        mcts = new MCTS(30);
+        lastAction = IMouvement.Movement.None;
+       
+    }
+    public IMouvement.Movement GetLastAction()
+    {
+        return lastAction;
+    }
 }
