@@ -10,54 +10,66 @@ public class Node
     public List<Node> children;
     public int visitCount;
     public float totalReward;
-    public float ucbValue;
+    public float Value;
     public GameState state;
+    public IMouvement.Movement lastMove; 
 
+    
+    public List<Node> GetAllNodes(Node rootNode)
+    {
+        List<Node> allNodes = new List<Node>();
+        TraverseTree(rootNode, allNodes);
+        return allNodes;
+    }
+    private void TraverseTree(Node currentNode, List<Node> allNodes)
+    {
+        allNodes.Add(currentNode);
+        foreach (Node child in currentNode.children)
+        { 
+            TraverseTree(child, allNodes);
+        }
+    }
     public Node(GameState initialState)
     {
         parent = null;
         children = new List<Node>();
         visitCount = 0;
         totalReward = 0;
-        ucbValue = float.MaxValue;
+
         state = initialState;
+        lastMove = IMouvement.Movement.None; 
     }
 
-    public void Update(float reward)
+    public void Update(float reward,int nbVisite)
     {
-        visitCount++;
+        visitCount+=nbVisite;
         totalReward += reward;
     }
 
-    public float UCBValue(int parentVisitCount, float explorationParameter)
-    {
-        if (visitCount == 0)
-            return float.MaxValue;
-
-        float exploitation = totalReward / visitCount;
-        float exploration = explorationParameter * Mathf.Sqrt(Mathf.Log(parentVisitCount) / visitCount);
-        ucbValue = exploitation + exploration;
-        return ucbValue;
-    }
+    
 
     public bool IsFullyExpanded()
     {
         return children.Count == 5;
     }
 
-    public Node GetBestChild(float explorationParameter)
+    public Node GetBestChild()
     {
         Node bestChild = null;
-        float bestUCBValue = float.MinValue;
+        float bestTotalReward = float.MinValue;
 
         foreach (Node child in children)
         {
-            float childUCBValue = child.UCBValue(visitCount, explorationParameter);
-            if (childUCBValue > bestUCBValue)
+            if (child.totalReward > bestTotalReward)
             {
-                bestUCBValue = childUCBValue;
+                bestTotalReward = child.totalReward;
                 bestChild = child;
             }
+        }
+
+        if (bestChild != null)
+        {
+            lastMove = bestChild.state.GetLastAction();
         }
 
         return bestChild;

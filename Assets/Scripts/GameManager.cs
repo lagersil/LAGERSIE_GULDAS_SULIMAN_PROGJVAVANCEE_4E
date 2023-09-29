@@ -15,12 +15,12 @@ public class GameManager : MonoBehaviour
     private string finDePartie;
     private GameState game;
     float[] possibleAngles = { 45f, -45f, 180f, 135f, -135f };
-
+    private int iteration = 30;
     private void Start()
     { 
         game = new GameState();
         game.joueur = new CharacterControll();
-        game.ia = new IA();
+        game.mcts = new MCTS(iteration);
         game.balle = new Ball();
         
         float randomAngle = possibleAngles[Random.Range(0, possibleAngles.Length)];
@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         game.Tick(Time.deltaTime,game.joueur.getMove(game.PlayerHaveBall),game.ia.getMove(game.IaHaveBall)); 
+        
         HandlePlayerMove();
     }
   
