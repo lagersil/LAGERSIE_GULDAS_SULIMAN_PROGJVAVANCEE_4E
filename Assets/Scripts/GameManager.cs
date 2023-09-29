@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
  
     void Update()
     {
-        game.Tick(Time.deltaTime); 
+        game.Tick(Time.deltaTime,game.joueur.getMove(game.PlayerHaveBall),game.ia.getMove(game.IaHaveBall)); 
         HandlePlayerMove();
     }
   

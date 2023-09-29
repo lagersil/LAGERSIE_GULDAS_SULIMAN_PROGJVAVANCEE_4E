@@ -8,8 +8,8 @@ public struct GameState
     public IA ia;
     public Ball balle;
     private const float moveSpeed = 5.0f;
-    private bool IaHaveBall; 
-    private bool PlayerHaveBall; 
+    public bool IaHaveBall; 
+    public bool PlayerHaveBall; 
     private const float minZ = 5.0f;
     private const float maxZ = 12.0f;
     private const float minX = 1.0f;
@@ -19,9 +19,9 @@ public struct GameState
     private bool finDePartie;
 
    
-    public void Tick(float delta)
+    public void Tick(float delta, IMouvement.Movement mouvementJ, IMouvement.Movement mouvementI)
     {
-        switch (joueur.getMove(PlayerHaveBall))
+        switch (mouvementJ)
         {
             case IMouvement.Movement.Up:
                 joueur.position.center += Vector3.forward * (moveSpeed * delta);
@@ -58,7 +58,7 @@ public struct GameState
             Mathf.Clamp(joueur.position.center.z, minZ, maxZ));
         
         
-        switch (ia.getMove(IaHaveBall))
+        switch (mouvementI)
         {
             case IMouvement.Movement.Up:
                 ia.position.center += Vector3.forward * (moveSpeed * delta);
