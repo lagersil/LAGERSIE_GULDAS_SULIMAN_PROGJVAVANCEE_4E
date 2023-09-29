@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 [System.Serializable]
@@ -138,15 +139,14 @@ public struct GameState
             Debug.Log("Points pour joueur");
             victoireJoueur = true;
             victoireIA = false;
-            //Panel_Win.SetActive(true);
-            //SceneManager.LoadScene("MainMenu");
+            
         }
         else if (balle.position.center.x<-6f)
         {
             Debug.Log("Points pour Ia");
             victoireJoueur = false;
             victoireIA = true;
-            
+
         }
     }
     private void Rebond()

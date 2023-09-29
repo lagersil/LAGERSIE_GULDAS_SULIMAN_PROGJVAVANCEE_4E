@@ -9,4 +9,13 @@ WindJammer MCTS
 
 → https://pixabay.com/fr/music/search/?pagi=3
 
+- pour le terrain :
+
+→ on a utiliser blender pour la creation du terrain qui comprend :
+	-sol
+	-barrieres
+	-cage goal
+  les materiaux sont ceux de blender pour le terrain.
+  (les autres materiaux sont de unity.)
+
 
