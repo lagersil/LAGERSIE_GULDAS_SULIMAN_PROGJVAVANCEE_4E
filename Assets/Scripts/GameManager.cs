@@ -19,8 +19,9 @@ public class GameManager : MonoBehaviour
     float[] possibleAngles = { 45f, -45f, 180f, 135f, -135f };
     private int iteration = 30;
     
-    //public GameObject PanelLose;
-    //public GameObject PanelWin;
+    
+    public GameObject PanelLose;
+    public GameObject PanelWin;
     private void Start()
     { 
         game = new GameState();
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
         balleGO.transform.position = game.balle.position.center;
     }
  
-    /*void WinLosePanel()
+    void WinLosePanel()
     {
         if (game.victoireIA)
         {
@@ -64,21 +65,21 @@ public class GameManager : MonoBehaviour
         }
 
        
-    }*/
-    /*private IEnumerator LoadMainMenuAfterDelay()
+    }
+    private IEnumerator LoadMainMenuAfterDelay()
     {
         yield return new WaitForSeconds(1f);
 
         // Charger la scène "MainMenu"
         SceneManager.LoadScene("MainMenu");
-    }*/
+    }
 
     void Update()
     {
         game.Tick(Time.deltaTime,game.joueur.getMove(game.PlayerHaveBall),game.ia.getMove(game.IaHaveBall)); 
         
         HandlePlayerMove();
-        //WinLosePanel();
+        WinLosePanel();
     }
   
 

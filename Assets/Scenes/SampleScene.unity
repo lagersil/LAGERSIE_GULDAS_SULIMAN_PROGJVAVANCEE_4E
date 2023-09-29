@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 336024521}
   - component: {fileID: 336024520}
+  - component: {fileID: 336024522}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -170,6 +171,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &336024522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336024519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bafec871fabfd644a53c82480d2f9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState:
+    IaHaveBall: 0
+    PlayerHaveBall: 0
+    victoireJoueur: 0
+    victoireIA: 0
+    coupsPossible: 
+  PanelLose: {fileID: 984924109}
+  PanelWin: {fileID: 984924108}
 --- !u!1 &383830094 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2364180264263678451, guid: ed02780afe3e29a4ea8194ddc29eaa80, type: 3}
@@ -731,6 +752,22 @@ PrefabInstance:
       propertyPath: PanelLose
       value: 
       objectReference: {fileID: 984924109}
+    - target: {fileID: 83510591538159605, guid: ded27337542cb3143b5781de55f47f94, type: 3}
+      propertyPath: gameState.IaHaveBall
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 83510591538159605, guid: ded27337542cb3143b5781de55f47f94, type: 3}
+      propertyPath: gameState.victoireIA
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 83510591538159605, guid: ded27337542cb3143b5781de55f47f94, type: 3}
+      propertyPath: gameState.PlayerHaveBall
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 83510591538159605, guid: ded27337542cb3143b5781de55f47f94, type: 3}
+      propertyPath: gameState.victoireJoueur
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4901934457107486148, guid: ded27337542cb3143b5781de55f47f94, type: 3}
       propertyPath: m_Pivot.x
       value: 0

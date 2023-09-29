@@ -25,6 +25,7 @@ public struct GameState
     private IMouvement.Movement lastAction; 
     Random random ;
     public List<IMouvement.Movement> coupsPossible; 
+    
    
     public void Tick(float delta, IMouvement.Movement mouvementJ, IMouvement.Movement mouvementI)
     {
@@ -139,7 +140,9 @@ public struct GameState
             Debug.Log("Points pour joueur");
             victoireJoueur = true;
             victoireIA = false;
-            
+            //Panel_Win.SetActive(true);
+            //SceneManager.LoadScene("MainMenu");
+
         }
         else if (balle.position.center.x<-6f)
         {
