@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.Audio;
 
+//Classe permettant de gerer le menu de parametre
 public class SettingMenu : MonoBehaviour
 {
     public TMPro.TMP_Dropdown resolutionDropdown;
@@ -12,6 +13,10 @@ public class SettingMenu : MonoBehaviour
 
     Resolution[] resolutions;
 
+    /* 
+    * Cette fonction est appelee au demarrage du script ou de l'objet auquel il est attache dans Unity.
+    * Elle initialise la fenetre de jeu a une certaine resolution.
+    */
     public void Start()
     {
         resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height }).Distinct().ToArray();
@@ -37,17 +42,19 @@ public class SettingMenu : MonoBehaviour
         Screen.fullScreen = true;
     }
 
+    //Regle le volume du jeu
     public void setVolume(float volume)
     {
-        //Debug.Log(volume);
         audioMixer.SetFloat("volume", volume);
     }
 
+    //Switch entre le pleine ecran et la fenetre
     public void setFullScreen(bool isfullscreen)
     {
         Screen.fullScreen = isfullscreen;
     }
 
+    //Regle la resolution de l'ecran
     public void setResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];

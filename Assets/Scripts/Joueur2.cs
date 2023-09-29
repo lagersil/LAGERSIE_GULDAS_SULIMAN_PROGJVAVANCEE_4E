@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
 
-// Structure representant le controle du personnage avec une interface IMouvement
-public struct CharacterControll : IMouvement
+// Définir la structure Joueur2 qui implémente l'interface IMouvement
+public struct Joueur2 : IMouvement
 {
 
     public Bounds position;
@@ -15,41 +15,41 @@ public struct CharacterControll : IMouvement
     {
         if (!balle)
         {
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.U))
             {
                 return IMouvement.Movement.Up;
             }
-            else if (Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(KeyCode.J))
             {
                 return IMouvement.Movement.Down;
 
             }
-            else if (Input.GetKey(KeyCode.A))
+            else if (Input.GetKey(KeyCode.H))
             {
                 return IMouvement.Movement.Left;
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(KeyCode.K))
             {
                 return IMouvement.Movement.Right;
             }
         }
         else
         {
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.U))
             {
                 return IMouvement.Movement.ShootUp;
 
             }
-            else if (Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(KeyCode.J))
             {
                 return IMouvement.Movement.ShootDown;
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(KeyCode.H))
             {
                 return IMouvement.Movement.ShootFront;
             }
 
-            else if (Input.GetKey(KeyCode.Space))
+            else if (Input.GetKey(KeyCode.P))
             {
                 return IMouvement.Movement.Shoot;
             }
