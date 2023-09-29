@@ -156,8 +156,8 @@ MonoBehaviour:
   joueurGO: {fileID: 1030518556}
   iaGO: {fileID: 449253585}
   balleGO: {fileID: 383830094}
-  PanelLose: {fileID: 0}
-  PanelWin: {fileID: 0}
+  PanelLose: {fileID: 984924109}
+  PanelWin: {fileID: 984924108}
 --- !u!4 &336024521
 Transform:
   m_ObjectHideFlags: 0
